@@ -1,10 +1,13 @@
 package dwbe.shopping.View;
 
 import dwbe.shopping.Controller.ContratoService;
+import dwbe.shopping.Controller.EventoService;
 import dwbe.shopping.Model.Contrato;
+import dwbe.shopping.Model.Evento;
 import dwbe.shopping.Model.Locatario;
 import dwbe.shopping.Model.Logradouro;
 import dwbe.shopping.dao.ContratoDAO;
+import dwbe.shopping.dao.EventoDAO;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -66,6 +69,47 @@ public class Main {
 					"\nObjeto de locacao: "+ contrato.getObjetoLocacao() +
 					"\nValor de R$ " + contrato.getValor() +
 					"\nInicia em " + contrato.getDataInicio() + " Termina em " + contrato.getDataTermino());
+		}
+
+		// Criando uma instância do EventosService e do EventosDAO
+		EventoService eventoService = new EventoService();
+		EventoDAO eventoDAO = new EventoDAO();
+
+		//Criando Eventos
+		Evento evento1 = new Evento(1, "Evento Novembro", "2023-11-07 | 13:00", "Cafés exoticos na praça de alimentação");
+
+		// Cadastrando eventos
+		eventoService.cadastrarEvento(evento1);
+
+		List<Evento> eventos = eventoService.listaDeEventos();
+		System.out.println("Eventos cadastrados:");
+		for (Evento evento : eventos) {
+			System.out.println("- Evento:" + evento1.getId() +
+					"\nNome: " + evento1.getNomeEvento() +
+					"\ndata e hora: "+ evento1.getDataHora() +
+					"\nDescrição: " + evento1.getDescricao());
+		}
+
+		evento1.setDataHora("2023-11-07 | 18:00");
+		eventoService.alterarEvento(evento1);
+
+		eventoService.listaDeEventos();
+		System.out.println("Eventos cadastrados após alteração:");
+		for (Evento evento : eventos) {
+			System.out.println("- Evento:" + evento1.getId() +
+					"\nNome: " + evento1.getNomeEvento() +
+					"\ndata e hora: "+ evento1.getDataHora() +
+					"\nDescrição: " + evento1.getDescricao());
+		}
+
+		eventoService.excluirEvento(1);
+		eventoService.listaDeEventos();
+		System.out.println("Eventos cadastrados após exclusão:");
+		for (Evento evento : eventos) {
+			System.out.println("- Evento:" + evento1.getId() +
+					"\nNome: " + evento1.getNomeEvento() +
+					"\ndata e hora: "+ evento1.getDataHora() +
+					"\nDescrição: " + evento1.getDescricao());
 		}
 	}
 }

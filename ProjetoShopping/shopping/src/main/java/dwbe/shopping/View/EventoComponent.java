@@ -12,13 +12,13 @@ public class EventoComponent implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception{
         for (int x=1; x<=5; x++){
-            service.gravar(new Evento(x));
+            service.cadastrarEvento(new Evento(x));
         }
         Evento evento2  = service.buscarPorEvento(2);
         evento2.setId(20);
-        service.alterar(evento2);
+        service.alterarEvento(evento2);
 
-        for(Evento evento: service.listar()){
+        for(Evento evento: service.listaDeEventos()){
             System.out.println(evento);
         }
     }
